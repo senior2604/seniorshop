@@ -201,7 +201,25 @@
   <main>
     <section class="presentation">
       <p><strong>Senior'shop</strong> est une boutique en ligne dédiée à l’hygiène, à la santé et au bien-être. Notre mission est de rendre accessibles les produits de soins indispensables, simplement, rapidement, et avec paiement à la livraison.</p>
+	  <p><h2>Pour commander, sélectionnez une catégorie puis cliquez sur le bouton “Commander”.</h2></p>
     </section>
+
+	<section>
+      <form class="order-section" id="orderForm" aria-label="Formulaire de commande">
+        <h2>Vos informations</h2>
+
+        <label for="name">Nom complet *</label>
+        <input type="text" id="name" name="name" placeholder="Votre nom complet" required autocomplete="name" />
+
+        <label for="phone">Téléphone *</label>
+        <input type="tel" id="phone" name="phone" placeholder="Ex: +228 93 18 73 10" pattern="^\+?[0-9\s\-]{8,15}$" required autocomplete="tel" />
+
+        <label for="address">Adresse de livraison *</label>
+        <textarea id="address" name="address" placeholder="Votre adresse complète" rows="3" required></textarea>
+
+        <button type="submit">Passer commande</button>
+      </form>
+    </section> <hr><hr><hr>
 
     <section class="categories">
       <article class="category-card" aria-label="Hygiène et désinfection">
@@ -328,22 +346,7 @@
       </article>
     </section>
 
-    <section>
-      <form class="order-section" id="orderForm" aria-label="Formulaire de commande">
-        <h2>Vos informations</h2>
-
-        <label for="name">Nom complet *</label>
-        <input type="text" id="name" name="name" placeholder="Votre nom complet" required autocomplete="name" />
-
-        <label for="phone">Téléphone *</label>
-        <input type="tel" id="phone" name="phone" placeholder="Ex: +228 93 18 73 10" pattern="^\+?[0-9\s\-]{8,15}$" required autocomplete="tel" />
-
-        <label for="address">Adresse de livraison *</label>
-        <textarea id="address" name="address" placeholder="Votre adresse complète" rows="3" required></textarea>
-
-        <button type="submit">Passer commande</button>
-      </form>
-    </section>
+    
   </main>
 
   <footer>
