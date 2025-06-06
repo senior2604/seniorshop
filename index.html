@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Senior'shop</title>
+  <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f8fa;
+      color: #222;
+      line-height: 1.5;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: #4caf50;
+      color: white;
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgb(0 0 0 / 0.15);
+    }
+    header h1 {
+      margin: 0 0 0.3rem;
+      font-weight: 700;
+      font-size: 1.8rem;
+    }
+    header p {
+      margin: 0;
+      font-weight: 400;
+      font-size: 1rem;
+    }
+    main {
+      flex-grow: 1;
+      max-width: 960px;
+      margin: 1.5rem auto;
+      padding: 0 1rem 2rem;
+      width: 100%;
+    }
+    .presentation {
+      background: white;
+      padding: 1.2rem 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      color: #333;
+    }
+    .categories {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    @media (min-width: 640px) {
+      .categories {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+    @media (min-width: 900px) {
+      .categories {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+    .category-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1rem;
+      box-shadow: 0 4px 15px rgb(0 0 0 / 0.07);
+      display: flex;
+      flex-direction: column;
+    }
+    .category-card h2 {
+      margin-top: 0;
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: #2a7a2a;
+      border-bottom: 2px solid #4caf50;
+      padding-bottom: 0.4rem;
+    }
+    .products-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    .product-item {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      border: 1px solid #ddd;
+      padding: 0.7rem 1rem;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+    .product-img {
+      flex-shrink: 0;
+      width: 80px;
+      height: 60px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1px solid #ccc;
+    }
+    .product-info {
+      flex-grow: 1;
+      font-size: 0.95rem;
+      color: #222;
+    }
+    .product-name {
+      margin: 0 0 0.25rem;
+      font-weight: 600;
+    }
+    .product-price {
+      margin: 0;
+      color: #4caf50;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    .quantity-select {
+      width: 60px;
+      padding: 0.3rem 0.4rem;
+      border-radius: 5px;
+      border: 1px solid #bbb;
+      font-size: 1rem;
+      cursor: pointer;
+      background: white;
+    }
+    form.order-section {
+      background: white;
+      padding: 1.5rem 1.2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 18px rgb(0 0 0 / 0.08);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    form.order-section h2 {
+      text-align: center;
+      color: #2a7a2a;
+      margin-top: 0;
+      margin-bottom: 1rem;
+    }
+    form.order-section label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+      color: #333;
+      font-size: 0.9rem;
+    }
+    form.order-section input,
+    form.order-section textarea {
+      width: 100%;
+      padding: 0.5rem 0.6rem;
+      font-size: 1rem;
+      margin-bottom: 1.1rem;
+      border: 1.8px solid #ccc;
+      border-radius: 7px;
+      transition: border-color 0.3s;
+      resize: vertical;
+    }
+    form.order-section input:focus,
+    form.order-section textarea:focus {
+      border-color: #4caf50;
+      outline: none;
+    }
+    form.order-section button {
+      width: 100%;
+      background-color: #4caf50;
+      color: white;
+      font-weight: 700;
+      font-size: 1.1rem;
+      border: none;
+      padding: 0.75rem 0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    form.order-section button:hover {
+      background-color: #388e3c;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem 1rem 2rem;
+      font-size: 0.85rem;
+      color: #666;
+      background: #f0f0f0;
+      margin-top: auto;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Senior'shop</h1>
+    <p>Les essentiels santé pour tous, livrés chez vous !</p>
+  </header>
+
+  <main>
+    <section class="presentation">
+      <p><strong>Senior'shop</strong> est une boutique en ligne dédiée à l’hygiène, à la santé et au bien-être. Notre mission est de rendre accessibles les produits de soins indispensables, simplement, rapidement, et avec paiement à la livraison.</p>
+    </section>
+
+    <section class="categories">
+      <article class="category-card" aria-label="Hygiène et désinfection">
+        <h2>Hygiène et désinfection</h2>
+        <div class="products-list">
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Kit+Hygiène" alt="Kit hygiène familiale" />
+            <div class="product-info">
+              <p class="product-name">Kit hygiène familiale</p>
+              <p class="product-price">3500 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Kit hygiène familiale" data-price="3500" aria-label="Quantité Kit hygiène familiale">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Savon+Antiseptique" alt="Savon antiseptique" />
+            <div class="product-info">
+              <p class="product-name">Savon antiseptique</p>
+              <p class="product-price">1000 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Savon antiseptique" data-price="1000" aria-label="Quantité Savon antiseptique">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Gel+Hydroalcoolique" alt="Gel hydroalcoolique 100ml" />
+            <div class="product-info">
+              <p class="product-name">Gel hydroalcoolique 100ml</p>
+              <p class="product-price">1500 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Gel hydroalcoolique 100ml" data-price="1500" aria-label="Quantité Gel hydroalcoolique 100ml">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </article>
+
+      <article class="category-card" aria-label="Compléments alimentaires">
+        <h2>Compléments alimentaires</h2>
+        <div class="products-list">
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Vitamines+Seniors" alt="Vitamines Seniors" />
+            <div class="product-info">
+              <p class="product-name">Vitamines Seniors</p>
+              <p class="product-price">7500 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Vitamines Seniors" data-price="7500" aria-label="Quantité Vitamines Seniors">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Oméga+3" alt="Complément Oméga 3" />
+            <div class="product-info">
+              <p class="product-name">Complément Oméga 3</p>
+              <p class="product-price">6500 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Complément Oméga 3" data-price="6500" aria-label="Quantité Complément Oméga 3">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </article>
+
+      <article class="category-card" aria-label="Matériel de soin">
+        <h2>Matériel de soin</h2>
+        <div class="products-list">
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Thermomètre" alt="Thermomètre digital" />
+            <div class="product-info">
+              <p class="product-name">Thermomètre digital</p>
+              <p class="product-price">12000 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Thermomètre digital" data-price="12000" aria-label="Quantité Thermomètre digital">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Masque+Chirurgical" alt="Masque chirurgical" />
+            <div class="product-info">
+              <p class="product-name">Masque chirurgical (x10)</p>
+              <p class="product-price">3000 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Masque chirurgical (x10)" data-price="3000" aria-label="Quantité Masque chirurgical">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </article>
+
+      <article class="category-card" aria-label="Soins et bien-être">
+        <h2>Soins et bien-être</h2>
+        <div class="products-list">
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Crème+Hydratante" alt="Crème hydratante" />
+            <div class="product-info">
+              <p class="product-name">Crème hydratante</p>
+              <p class="product-price">5500 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Crème hydratante" data-price="5500" aria-label="Quantité Crème hydratante">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+          <div class="product-item">
+            <img class="product-img" src="https://via.placeholder.com/150x100?text=Huile+de+massage" alt="Huile de massage" />
+            <div class="product-info">
+              <p class="product-name">Huile de massage</p>
+              <p class="product-price">4500 FCFA</p>
+            </div>
+            <select class="quantity-select" data-name="Huile de massage" data-price="4500" aria-label="Quantité Huile de massage">
+              <option value="0" selected>0</option>
+              <option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option>
+            </select>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section>
+      <form class="order-section" id="orderForm" aria-label="Formulaire de commande">
+        <h2>Vos informations</h2>
+
+        <label for="name">Nom complet *</label>
+        <input type="text" id="name" name="name" placeholder="Votre nom complet" required autocomplete="name" />
+
+        <label for="phone">Téléphone *</label>
+        <input type="tel" id="phone" name="phone" placeholder="Ex: +228 93 18 73 10" pattern="^\+?[0-9\s\-]{8,15}$" required autocomplete="tel" />
+
+        <label for="address">Adresse de livraison *</label>
+        <textarea id="address" name="address" placeholder="Votre adresse complète" rows="3" required></textarea>
+
+        <button type="submit">Passer commande</button>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    &copy; 2025 Senior'shop. Tous droits réservés.
+  </footer>
+
+  <script>
+    const form = document.getElementById('orderForm');
+
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const name = form.name.value.trim();
+      const phone = form.phone.value.trim();
+      const address = form.address.value.trim();
+
+      if (!name || !phone || !address) {
+        alert('Veuillez remplir tous les champs obligatoires.');
+        return;
+      }
+
+      // Récupérer produits commandés
+      const selects = document.querySelectorAll('.quantity-select');
+      const orderedProducts = [];
+      selects.forEach(select => {
+        const qty = parseInt(select.value, 10);
+        if (qty > 0) {
+          orderedProducts.push({
+            name: select.dataset.name,
+            qty: qty,
+            price: select.dataset.price
+          });
+        }
+      });
+
+      if (orderedProducts.length === 0) {
+        alert('Veuillez sélectionner au moins un produit.');
+        return;
+      }
+
+      // Construire message WhatsApp
+      let message = `🛒 *Commande Senior'shop*\n\n`;
+      message += `👤 Nom: ${name}\n`;
+      message += `📞 Téléphone: ${phone}\n`;
+      message += `🏠 Adresse: ${address}\n\n`;
+      message += `🛍️ *Produits commandés*:\n`;
+
+      let total = 0;
+      orderedProducts.forEach(p => {
+        const priceInt = parseInt(p.price, 10);
+        total += priceInt * p.qty;
+        message += `- ${p.name} x${p.qty} = ${priceInt * p.qty} FCFA\n`;
+      });
+      message += `\n💰 *Total: ${total} FCFA*\n\n`;
+      message += `Merci pour votre commande !`;
+
+      // Encode message pour URL
+      const encodedMessage = encodeURIComponent(message);
+
+      // Ton numéro WhatsApp (format international, ex: +22893187310)
+      const whatsappNumber = '22893187310';
+
+      // Lien WhatsApp
+      const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodedMessage}`;
+
+      // Ouvre WhatsApp dans un nouvel onglet (mobile ou desktop)
+      window.open(whatsappURL, '_blank');
+    });
+  </script>
+</body>
+</html>
